@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import devicehost_pb2 as devicehost__pb2
+from pb import devicehost_pb2 as pb_dot_devicehost__pb2
 
 GRPC_GENERATED_VERSION = '1.83.1'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + ' but the generated code in devicehost_pb2_grpc.py depends on'
+        + ' but the generated code in pb/devicehost_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -37,18 +37,18 @@ class DeviceHostStub:
         """
         self.Types = channel.unary_unary(
                 '/devicehost.DeviceHost/Types',
-                request_serializer=devicehost__pb2.TypesRequest.SerializeToString,
-                response_deserializer=devicehost__pb2.TypesReply.FromString,
+                request_serializer=pb_dot_devicehost__pb2.TypesRequest.SerializeToString,
+                response_deserializer=pb_dot_devicehost__pb2.TypesReply.FromString,
                 _registered_method=True)
         self.New = channel.unary_unary(
                 '/devicehost.DeviceHost/New',
-                request_serializer=devicehost__pb2.NewRequest.SerializeToString,
-                response_deserializer=devicehost__pb2.NewReply.FromString,
+                request_serializer=pb_dot_devicehost__pb2.NewRequest.SerializeToString,
+                response_deserializer=pb_dot_devicehost__pb2.NewReply.FromString,
                 _registered_method=True)
         self.Call = channel.unary_unary(
                 '/devicehost.DeviceHost/Call',
-                request_serializer=devicehost__pb2.CallRequest.SerializeToString,
-                response_deserializer=devicehost__pb2.CallReply.FromString,
+                request_serializer=pb_dot_devicehost__pb2.CallRequest.SerializeToString,
+                response_deserializer=pb_dot_devicehost__pb2.CallReply.FromString,
                 _registered_method=True)
 
 
@@ -82,18 +82,18 @@ def add_DeviceHostServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Types': grpc.unary_unary_rpc_method_handler(
                     servicer.Types,
-                    request_deserializer=devicehost__pb2.TypesRequest.FromString,
-                    response_serializer=devicehost__pb2.TypesReply.SerializeToString,
+                    request_deserializer=pb_dot_devicehost__pb2.TypesRequest.FromString,
+                    response_serializer=pb_dot_devicehost__pb2.TypesReply.SerializeToString,
             ),
             'New': grpc.unary_unary_rpc_method_handler(
                     servicer.New,
-                    request_deserializer=devicehost__pb2.NewRequest.FromString,
-                    response_serializer=devicehost__pb2.NewReply.SerializeToString,
+                    request_deserializer=pb_dot_devicehost__pb2.NewRequest.FromString,
+                    response_serializer=pb_dot_devicehost__pb2.NewReply.SerializeToString,
             ),
             'Call': grpc.unary_unary_rpc_method_handler(
                     servicer.Call,
-                    request_deserializer=devicehost__pb2.CallRequest.FromString,
-                    response_serializer=devicehost__pb2.CallReply.SerializeToString,
+                    request_deserializer=pb_dot_devicehost__pb2.CallRequest.FromString,
+                    response_serializer=pb_dot_devicehost__pb2.CallReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -122,8 +122,8 @@ class DeviceHost:
             request,
             target,
             '/devicehost.DeviceHost/Types',
-            devicehost__pb2.TypesRequest.SerializeToString,
-            devicehost__pb2.TypesReply.FromString,
+            pb_dot_devicehost__pb2.TypesRequest.SerializeToString,
+            pb_dot_devicehost__pb2.TypesReply.FromString,
             options,
             channel_credentials,
             insecure,
@@ -149,8 +149,8 @@ class DeviceHost:
             request,
             target,
             '/devicehost.DeviceHost/New',
-            devicehost__pb2.NewRequest.SerializeToString,
-            devicehost__pb2.NewReply.FromString,
+            pb_dot_devicehost__pb2.NewRequest.SerializeToString,
+            pb_dot_devicehost__pb2.NewReply.FromString,
             options,
             channel_credentials,
             insecure,
@@ -176,8 +176,8 @@ class DeviceHost:
             request,
             target,
             '/devicehost.DeviceHost/Call',
-            devicehost__pb2.CallRequest.SerializeToString,
-            devicehost__pb2.CallReply.FromString,
+            pb_dot_devicehost__pb2.CallRequest.SerializeToString,
+            pb_dot_devicehost__pb2.CallReply.FromString,
             options,
             channel_credentials,
             insecure,

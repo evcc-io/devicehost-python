@@ -1,6 +1,7 @@
 #!/bin/sh
-# Regenerate the grpc stubs from proto/devicehost.proto
+# Regenerate the grpc stubs from pb/devicehost.proto.
+# The proto lives inside the package so the generated absolute imports resolve.
 set -e
-uv run python -m grpc_tools.protoc -Iproto \
+uv run python -m grpc_tools.protoc -I. \
 	--python_out=. --pyi_out=. --grpc_python_out=. \
-	proto/devicehost.proto
+	pb/devicehost.proto

@@ -61,11 +61,19 @@ Call arguments and results are json encoded. Their Go types follow from the
 capability's interface in evcc's `api/api.go`, so `CurrentPower` returns one
 json number. Errors are gRPC errors, not part of the reply.
 
+## Layout
+
+```
+host.py   the grpc server and its New / Call dispatch
+meter.py  the meter type: its TYPE descriptor and device class
+pb/       devicehost.proto and the generated stubs
+```
+
 ## Adding a device type
 
-1. Add a `DeviceType` in `types()` with its properties.
-2. Add a class with `capabilities()` and `call()`.
-3. Dispatch to it in `DeviceHost.New`.
+1. Write a module with a `TYPE` descriptor and a class exposing
+   `capabilities()` and `call()`, like `meter.py`.
+2. Register it in `DEVICES` in `host.py`.
 
 The capability names are the interface names from evcc's `api` package
 (`api.Meter`, `api.MeterEnergy`, `api.PhaseCurrents`, `api.Charger`, …).
@@ -74,15 +82,19 @@ evcc it talks to.
 
 ## Regenerating the stubs
 
-`devicehost_pb2*.py` are checked in so the host runs without protoc. After
+`pb/devicehost_pb2*.py` are checked in so the host runs without protoc. After
 changing the proto:
 
 ```bash
 ./generate.sh
 ```
 
-Keep `proto/devicehost.proto` in sync with `devicehost/proto/devicehost.proto`
-in the evcc repository.
+The proto lives inside `pb/` because protoc emits absolute imports: generated
+from elsewhere, the stubs would import each other as top-level modules and
+break once moved into a package.
+
+Keep `pb/devicehost.proto` in sync with `devicehost/proto/devicehost.proto` in
+the evcc repository.
 
 ## Notes
 
