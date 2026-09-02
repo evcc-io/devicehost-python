@@ -1,0 +1,6 @@
+meters:
+  - name: pv1
+    type: template
+    template: py-power
+    power: -3000
+    energy: 1234.5
