@@ -86,8 +86,5 @@ in the evcc repository.
 
 ## Notes
 
-The `class` field of `DeviceType` is a Python keyword, so protobuf only exposes
-it through `**kwargs` — see `device_type()` in `host.py`.
-
 The transport is insecure and unauthenticated, matching the evcc side. Do not
 expose the host outside a trusted network.

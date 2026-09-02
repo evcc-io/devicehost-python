@@ -14,16 +14,11 @@ import devicehost_pb2_grpc as pb_grpc
 log = logging.getLogger("devicehost")
 
 
-def device_type(cls, **kwargs):
-    # "class" is a python keyword, so protobuf only exposes that field via kwargs
-    return pb.DeviceType(**{"class": cls}, **kwargs)
-
-
 def types():
     """The device types this host provides, with their configuration properties."""
     return [
-        device_type(
-            "meter",
+        pb.DeviceType(
+            device_class="meter",
             type="power",
             title="Example Power Meter",
             properties=[

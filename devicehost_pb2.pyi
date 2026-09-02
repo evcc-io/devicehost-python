@@ -33,15 +33,16 @@ class TypesReply(_message.Message):
     def __init__(self, types: _Optional[_Iterable[_Union[DeviceType, _Mapping]]] = ...) -> None: ...
 
 class DeviceType(_message.Message):
-    __slots__ = ("type", "title", "properties")
-    CLASS_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("device_class", "type", "title", "properties")
+    DEVICE_CLASS_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     TITLE_FIELD_NUMBER: _ClassVar[int]
     PROPERTIES_FIELD_NUMBER: _ClassVar[int]
+    device_class: str
     type: str
     title: str
     properties: _containers.RepeatedCompositeFieldContainer[Property]
-    def __init__(self, type: _Optional[str] = ..., title: _Optional[str] = ..., properties: _Optional[_Iterable[_Union[Property, _Mapping]]] = ..., **kwargs) -> None: ...
+    def __init__(self, device_class: _Optional[str] = ..., type: _Optional[str] = ..., title: _Optional[str] = ..., properties: _Optional[_Iterable[_Union[Property, _Mapping]]] = ...) -> None: ...
 
 class Property(_message.Message):
     __slots__ = ("name", "type", "title", "help", "required", "mask", "advanced", "default_value", "example", "unit", "choice")
@@ -70,7 +71,7 @@ class Property(_message.Message):
     def __init__(self, name: _Optional[str] = ..., type: _Optional[_Union[PropertyType, str]] = ..., title: _Optional[str] = ..., help: _Optional[str] = ..., required: _Optional[bool] = ..., mask: _Optional[bool] = ..., advanced: _Optional[bool] = ..., default_value: _Optional[str] = ..., example: _Optional[str] = ..., unit: _Optional[str] = ..., choice: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class NewRequest(_message.Message):
-    __slots__ = ("type", "properties")
+    __slots__ = ("device_class", "type", "properties")
     class PropertiesEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -78,12 +79,13 @@ class NewRequest(_message.Message):
         key: str
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
-    CLASS_FIELD_NUMBER: _ClassVar[int]
+    DEVICE_CLASS_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     PROPERTIES_FIELD_NUMBER: _ClassVar[int]
+    device_class: str
     type: str
     properties: _containers.ScalarMap[str, str]
-    def __init__(self, type: _Optional[str] = ..., properties: _Optional[_Mapping[str, str]] = ..., **kwargs) -> None: ...
+    def __init__(self, device_class: _Optional[str] = ..., type: _Optional[str] = ..., properties: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class NewReply(_message.Message):
     __slots__ = ("id", "capabilities")
