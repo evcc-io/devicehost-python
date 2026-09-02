@@ -29,23 +29,24 @@ class DeviceHost(pb2_grpc.DeviceHostServicer):
         self.ids = count()
 
     def Types(self, request, context):
-        return pb2.TypesReply(types=[type for type, _ in DEVICES.values()])
+        return pb2.TypesReply(types=[typ for typ, _ in DEVICES.values()])
 
     def New(self, request, context):
         entry = DEVICES.get(request.type)
         if entry is None:
             context.abort(grpc.StatusCode.NOT_FOUND, f"unknown type: {request.type}")
+        _, cls = entry
 
         try:
-            device = entry[1](request.properties)
+            device = cls(request.properties)
         except (KeyError, ValueError) as e:
             context.abort(grpc.StatusCode.INVALID_ARGUMENT, f"{request.type}: {e}")
 
-        id = f"{request.type}-{next(self.ids)}"
-        self.devices[id] = device
-        log.info("new %s: %s %s", id, request.type, dict(request.properties))
+        device_id = f"{request.type}-{next(self.ids)}"
+        self.devices[device_id] = device
+        log.info("new %s: %s %s", device_id, request.type, dict(request.properties))
 
-        return pb2.NewReply(id=id, capabilities=device.capabilities())
+        return pb2.NewReply(id=device_id, capabilities=device.capabilities())
 
     def Call(self, request, context):
         device = self.devices.get(request.id)

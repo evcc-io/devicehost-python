@@ -45,7 +45,7 @@ serve.
 
 ## What the host implements
 
-Three RPCs from `proto/devicehost.proto`:
+Three RPCs from `pb/devicehost.proto`:
 
 | RPC | Returns |
 |-----|---------|
